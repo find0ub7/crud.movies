@@ -1,6 +1,7 @@
 package com.crud.movies.usecases.validators;
 
 import com.crud.movies.domains.Movie;
+import com.crud.movies.gateways.persistence.MoviePersistenceGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -9,17 +10,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class CreateMovieValidator {
+public class UpdateMovieValidator {
 
   private final ActorValidator actorValidator;
+  private final MoviePersistenceGateway moviePersistenceGateway;
 
   public List<String> validate(Movie movie) {
     List<String> validationErrors = new ArrayList<>();
-
-    if (movie == null) return List.of("Movie nao pode ser nulo");
-
-    if (StringUtils.hasText(movie.getId())) {
-      validationErrors.add("Filme ja cadastrado. Id=" + movie.getId());
+    if (!moviePersistenceGateway.existsById(movie.getId())) {
+      validationErrors.add("Filme nao existe");
     }
 
     if (!StringUtils.hasText(movie.getTitle())) {
@@ -33,10 +32,8 @@ public class CreateMovieValidator {
     if (CollectionUtils.isEmpty(movie.getCasting())) {
       validationErrors.add("Elenco eh obrigatorio");
     } else {
-      List<String> castingValidationErrors = actorValidator.validate(movie.getCasting());
-      validationErrors.addAll(castingValidationErrors);
+      validationErrors.addAll(actorValidator.validate(movie.getCasting()));
     }
-
     return validationErrors;
   }
 }

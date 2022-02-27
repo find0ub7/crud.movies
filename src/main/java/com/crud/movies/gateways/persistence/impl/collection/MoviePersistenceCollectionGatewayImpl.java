@@ -16,6 +16,10 @@ public class MoviePersistenceCollectionGatewayImpl implements MoviePersistenceGa
       movie.setId(UUID.randomUUID().toString());
     }
 
+    movie.getCasting().stream()
+        .filter(actor -> !StringUtils.hasText(actor.getId()))
+        .forEach(actor -> actor.setId(UUID.randomUUID().toString()));
+
     movies.put(movie.getId(), movie);
     return movie;
   }
