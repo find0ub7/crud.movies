@@ -2,30 +2,35 @@ package com.crud.movies.gateways.persistence.impl.collection;
 
 import com.crud.movies.domains.Movie;
 import com.crud.movies.gateways.persistence.MoviePersistenceGateway;
-import org.springframework.util.StringUtils;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 
+@Profile("!prod")
+@Component("movie-persistence-collection")
 public class MoviePersistenceCollectionGatewayImpl implements MoviePersistenceGateway {
 
-  private static final Map<String, Movie> movies = new HashMap<>();
+  private static final Map<Long, Movie> movies = new HashMap<>();
+  private static Long movieId = 1L;
+  private static Long actorId = 1L;
 
   @Override
   public Movie save(Movie movie) {
-    if (!StringUtils.hasText(movie.getId())) {
-      movie.setId(UUID.randomUUID().toString());
+    if (movie.getId() == null) {
+      movie.setId(movieId++);
     }
 
     movie.getCasting().stream()
-        .filter(actor -> !StringUtils.hasText(actor.getId()))
-        .forEach(actor -> actor.setId(UUID.randomUUID().toString()));
+        .filter(actor -> actor.getId() == null)
+        .forEach(actor -> actor.setId(actorId++));
 
     movies.put(movie.getId(), movie);
     return movie;
   }
 
   @Override
-  public boolean existsById(String id) {
+  public boolean existsById(Long id) {
     return movies.containsKey(id);
   }
 
@@ -40,7 +45,7 @@ public class MoviePersistenceCollectionGatewayImpl implements MoviePersistenceGa
   }
 
   @Override
-  public Optional<Movie> findById(String movieId) {
+  public Optional<Movie> findById(Long movieId) {
     return Optional.ofNullable(movies.get(movieId));
   }
 }

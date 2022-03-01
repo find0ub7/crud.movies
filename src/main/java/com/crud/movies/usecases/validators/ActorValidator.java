@@ -1,6 +1,7 @@
 package com.crud.movies.usecases.validators;
 
 import com.crud.movies.domains.Actor;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@Component
 public class ActorValidator {
 
   public List<String> validate(List<Actor> casting) {

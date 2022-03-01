@@ -7,6 +7,6 @@ import lombok.Data;
 @Builder
 public class Actor {
 
-  private String id;
+  private Long id;
   private String name;
 }

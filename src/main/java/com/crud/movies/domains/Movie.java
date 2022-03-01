@@ -9,7 +9,7 @@ import java.util.List;
 @Builder
 public class Movie {
 
-  private String id;
+  private Long id;
   private String title;
   private String genre;
   private List<Actor> casting;

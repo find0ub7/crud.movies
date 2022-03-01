@@ -2,12 +2,14 @@ package com.crud.movies.usecases.validators;
 
 import com.crud.movies.domains.Movie;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 @RequiredArgsConstructor
 public class CreateMovieValidator {
 
@@ -18,7 +20,7 @@ public class CreateMovieValidator {
 
     if (movie == null) return List.of("Movie nao pode ser nulo");
 
-    if (StringUtils.hasText(movie.getId())) {
+    if (movie.getId() != null) {
       validationErrors.add("Filme ja cadastrado. Id=" + movie.getId());
     }
 

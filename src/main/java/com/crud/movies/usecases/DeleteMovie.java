@@ -5,9 +5,11 @@ import com.crud.movies.exceptions.BusinessValidationException;
 import com.crud.movies.gateways.persistence.MoviePersistenceGateway;
 import com.crud.movies.usecases.validators.DeleteMovieValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 @RequiredArgsConstructor
 public class DeleteMovie {
 

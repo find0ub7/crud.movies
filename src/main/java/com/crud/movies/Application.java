@@ -9,6 +9,7 @@ import com.crud.movies.usecases.validators.ActorValidator;
 import com.crud.movies.usecases.validators.CreateMovieValidator;
 import com.crud.movies.usecases.validators.DeleteMovieValidator;
 import com.crud.movies.usecases.validators.UpdateMovieValidator;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.List;
@@ -18,8 +19,12 @@ import java.util.Optional;
 public class Application {
 
   public static void main(String[] args) {
-    //    SpringApplication.run(Application.class, args);
+        SpringApplication.run(Application.class, args);
 
+//    standalone();
+  }
+
+  private static void standalone() {
     ActorValidator actorValidator = new ActorValidator();
     CreateMovieValidator createMovieValidator = new CreateMovieValidator(actorValidator);
     MoviePersistenceGateway moviePersistenceGateway = new MoviePersistenceCollectionGatewayImpl();
@@ -31,8 +36,8 @@ public class Application {
             .genre("sessao da tarde")
             .casting(
                 List.of(
-                    Actor.builder().id("blablabla").name("Brooke Shields").build(),
-                    Actor.builder().id("qualquercoisa").name("Christopher Atkins").build()))
+                    Actor.builder().id(111L).name("Brooke Shields").build(),
+                    Actor.builder().id(222L).name("Christopher Atkins").build()))
             .build();
 
     createMovie.execute(movie);

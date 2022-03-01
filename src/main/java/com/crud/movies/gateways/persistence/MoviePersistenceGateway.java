@@ -9,11 +9,11 @@ public interface MoviePersistenceGateway {
 
   Movie save(Movie movie);
 
-  boolean existsById(String id);
+  boolean existsById(Long id);
 
   void delete(Movie movie);
 
   List<Movie> findAll();
 
-  Optional<Movie> findById(String movieId);
+  Optional<Movie> findById(Long movieId);
 }

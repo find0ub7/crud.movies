@@ -5,10 +5,12 @@ import com.crud.movies.exceptions.BusinessValidationException;
 import com.crud.movies.gateways.persistence.MoviePersistenceGateway;
 import com.crud.movies.usecases.validators.UpdateMovieValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @RequiredArgsConstructor
+@Service
 public class UpdateMovie {
 
   private final MoviePersistenceGateway moviePersistenceGateway;
