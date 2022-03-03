@@ -16,7 +16,7 @@ public class SwaggerConfiguration {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("*"))
+                .apis(RequestHandlerSelectors.basePackage("com.crud.movies.gateways.controllers"))
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(buildApiInfo());
