@@ -1,6 +1,7 @@
 package com.crud.movies.usecases;
 
 import com.crud.movies.domains.Movie;
+import com.crud.movies.domains.ValidationError;
 import com.crud.movies.exceptions.BusinessValidationException;
 import com.crud.movies.gateways.persistence.MoviePersistenceGateway;
 import com.crud.movies.usecases.validators.UpdateMovieValidator;
@@ -17,7 +18,7 @@ public class UpdateMovie {
   private final UpdateMovieValidator updateMovieValidator;
 
   public Movie execute(Movie movie) {
-    List<String> validationErrors = updateMovieValidator.validate(movie);
+    List<ValidationError> validationErrors = updateMovieValidator.validate(movie);
 
     if (!validationErrors.isEmpty()) {
       throw new BusinessValidationException(validationErrors);

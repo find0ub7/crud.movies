@@ -1,10 +1,11 @@
 package com.crud.movies.usecases.validators;
 
+import com.crud.movies.domains.MessageCode;
 import com.crud.movies.domains.Movie;
+import com.crud.movies.domains.ValidationError;
 import com.crud.movies.gateways.persistence.MoviePersistenceGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,17 +16,27 @@ public class DeleteMovieValidator {
 
   private final MoviePersistenceGateway moviePersistenceGateway;
 
-  public List<String> validate(Movie movie) {
+  public List<ValidationError> validate(Movie movie) {
     boolean movieExists = moviePersistenceGateway.existsById(movie.getId());
-    List<String> validationErrors = new ArrayList<>();
+    List<ValidationError> validationErrors = new ArrayList<>();
 
     if (movie.getId() == null) {
-      validationErrors.add("Filme sem id");
+      validationErrors.add(
+              ValidationError.builder()
+                      .keyMessage(MessageCode.REQUIRED_FIELD)
+                      .params(List.of(MessageCode.MOVIE_ID_FIELD))
+                      .build());
     }
 
     if (!movieExists) {
-      validationErrors.add("Filme nao existe. Id=" + movie.getId());
+      validationErrors.add(
+              ValidationError.builder()
+                      .keyMessage(MessageCode.RESOURCE_NOT_FOUND)
+                      .params(List.of(MessageCode.MOVIE_FIELD, movie.getId()))
+                      .build());
     }
+
+    //recurso nao encontrado
     return validationErrors;
   }
 }

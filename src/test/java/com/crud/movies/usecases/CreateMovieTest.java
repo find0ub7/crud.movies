@@ -1,6 +1,7 @@
 package com.crud.movies.usecases;
 
 import com.crud.movies.domains.Movie;
+import com.crud.movies.domains.ValidationError;
 import com.crud.movies.exceptions.BusinessValidationException;
 import com.crud.movies.gateways.persistence.MoviePersistenceGateway;
 import com.crud.movies.usecases.validators.CreateMovieValidator;
@@ -31,7 +32,7 @@ class CreateMovieTest {
   @Test
   void shouldNotSaveWhenValidationFailed() {
     Movie movie = Movie.builder().build();
-    Mockito.when(createMovieValidator.validate(movie)).thenReturn(List.of("erro validacao"));
+    Mockito.when(createMovieValidator.validate(movie)).thenReturn(List.of(ValidationError.builder().build()));
     Assertions.assertThrows(BusinessValidationException.class, () -> createMovie.execute(movie));
   }
 }

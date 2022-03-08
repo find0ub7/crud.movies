@@ -28,7 +28,7 @@ public class MovieController {
       consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_XML_VALUE})
   @ResponseStatus(HttpStatus.CREATED)
-  public MovieResponse createMovie(@Valid @RequestBody MovieRequest movieRequest) {
+  public MovieResponse createMovie(@RequestBody MovieRequest movieRequest) {
     Movie movie = movieRequest.toDomain();
     Movie movieSaved = createMovie.execute(movie);
     return new MovieResponse(movieSaved);

@@ -1,12 +1,14 @@
 package com.crud.movies.usecases;
 
+import com.crud.movies.domains.MessageCode;
 import com.crud.movies.domains.Movie;
+import com.crud.movies.domains.ValidationError;
 import com.crud.movies.exceptions.BusinessValidationException;
 import com.crud.movies.gateways.persistence.MoviePersistenceGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,7 +19,11 @@ public class FindMovieById {
 
   public Optional<Movie> execute(Long movieId) {
     if (movieId == null) {
-      throw new BusinessValidationException("id é obrigatorio");
+      throw new BusinessValidationException(
+          ValidationError.builder()
+              .keyMessage(MessageCode.REQUIRED_FIELD)
+              .params(List.of(MessageCode.MOVIE_ID_FIELD))
+              .build());
     }
     return moviePersistenceGateway.findById(movieId);
   }
