@@ -5,12 +5,16 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+
 @Data
 @NoArgsConstructor
 public class ActorRequest {
 
-    @ApiModelProperty(required = true, value = "Identificador do ator", example = "1")
+    @ApiModelProperty(value = "Identificador do ator", example = "1")
     private Long id;
+
+    @NotBlank
     @ApiModelProperty(required = true, value = "Nome do ator", example = "Fulano")
     private String name;
 

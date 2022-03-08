@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,9 +26,9 @@ public class MovieController {
 
   @PostMapping(
       consumes = MediaType.APPLICATION_JSON_VALUE,
-      produces = MediaType.APPLICATION_JSON_VALUE)
-  @ResponseStatus(HttpStatus.CREATED) //201 --> 500 pq? pq deu um erro inesperado do lado
-  public MovieResponse createMovie(@RequestBody MovieRequest movieRequest) {
+      produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_XML_VALUE})
+  @ResponseStatus(HttpStatus.CREATED)
+  public MovieResponse createMovie(@Valid @RequestBody MovieRequest movieRequest) {
     Movie movie = movieRequest.toDomain();
     Movie movieSaved = createMovie.execute(movie);
     return new MovieResponse(movieSaved);

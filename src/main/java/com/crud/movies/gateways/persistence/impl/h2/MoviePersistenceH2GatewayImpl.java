@@ -27,12 +27,12 @@ public class MoviePersistenceH2GatewayImpl implements MoviePersistenceGateway {
 
     @Override
     public boolean existsById(Long id) {
-        return false;
+        return movieH2Repository.existsById(id);
     }
 
     @Override
     public void delete(Movie movie) {
-
+        movieH2Repository.deleteById(movie.getId());
     }
 
     @Override
@@ -42,6 +42,6 @@ public class MoviePersistenceH2GatewayImpl implements MoviePersistenceGateway {
 
     @Override
     public Optional<Movie> findById(Long movieId) {
-        return Optional.empty();
+        return movieH2Repository.findById(movieId).map(MovieEntity::toDomain);
     }
 }
